@@ -1,34 +1,41 @@
-/*
-* @author: Kamyar Nemati <kamyarnemati@gmail.com>
-* @description: This class provides wrapper functions for libecg library.
-*/
-
 // libecg-clr-interface.h
+
+/*
+* Author: Kamyar Nemati
+* Email: kamyarnemati at gmail.com
+*
+* Description:
+* This file contains managed-C++ code (Common Language Runtime classes).
+* It provides wrappers for libecg library to interface CLR-based languages such as C#.
+*/
 
 #pragma once
 
-/* Include libecg headers */
-#include "../../../libecg/libecg/encode.h"
-#include "../../../libecg/libecg/decode.h"
+/* Include libecg headers. These classes are implemented in native C++ 14. */
+#include "../../../libecg/libecg/encode.h" //Encode class
+#include "../../../libecg/libecg/decode.h" //Decode class
 /**/
 
+/* Needed in order to convert managed-type of string back into native standard string. */
 #include <msclr\marshal_cppstd.h>
 
 using namespace System;
-using namespace libecg; //Open up libecg namespace
+using namespace libecg; //libecg namespace
 
 namespace libecgclrinterface {
 
-	//A managed wrapper class for unmanaged Encode class. Each EncodeWrapper shall handle only one Encode object at a time.
+	/* A wrapper class that contains managed code to interface unmanaged Encode class from libecg. */
+	/* Each instance of EncodeWrapper class shall handle only one instance of Encode class at a time. */
+	/* Re-instantiation of this class will get its state destroyed.*/
 	public ref class EncodeWrapper
 	{
 		// TODO: Add your methods for this class here.
 	private:
 		typedef std::list<int>* pList;
-		Encode* object = nullptr; //Represents a reference to to Encode class.
+		Encode* object = nullptr; //Represents an instance to Encode class.
 
 	public:
-		//Wrapper constructor (managed arguments).
+		//Wrapper constructor (arguments are meant to interface managed language).
 		EncodeWrapper(
 			System::Int32 dataset_len,
 			System::String^ dataset_path,
@@ -51,12 +58,12 @@ namespace libecgclrinterface {
 			stat = status;
 		};
 
-		//Reference deletion.
+		//Memory deallocation.
 		~EncodeWrapper() {
 			delete this->object;
 		};
 
-		//Wrapper function.
+		//Wrapper function
 		System::Void _getOriginal(System::Collections::Generic::List<int>^% lst) {
 			pList list = new std::list<int>();
 			this->object->getOriginal(list);
@@ -65,34 +72,36 @@ namespace libecgclrinterface {
 			return;
 		}
 
-		//Wrapper function.
+		//Wrapper function
 		System::Boolean _encode() {
 			return this->object->encode();
 		}
 
-		//Wrapper function.
+		//Wrapper function
 		System::String^ _getBinarySequeneCompressed() {
 			std::string str = this->object->getBinarySequeneCompressed();
 			return gcnew String(str.c_str());
 		}
 
-		//Wrapper function.
+		//Wrapper function
 		System::Single _getBinarySequeneCompressionRatio() {
 			float cr = this->object->getBinarySequeneCompressionRatio();
 			return cr;
 		}
 	};
 
-	//A managed wrapper class for unmanaged Decode class. Each DecodeWrapper shall handle only one Decode object at a time.
+	/* A wrapper class that contains managed code to interface unmanaged Decode class from libecg. */
+	/* Each instance of DecodeWrapper class shall handle only one instance of Decode class at a time. */
+	/* Re-instantiation of this class will get its state destroyed.*/
 	public ref class DecodeWrapper
 	{
 		// TODO: Add your methods for this class here.
 	private:
 		typedef std::list<int>* pList;
-		Decode* object = nullptr; //Represents a reference to to Decode class.
+		Decode* object = nullptr; //Represents an instance to Decode class.
 
 	public:
-		//Wrapper constructor (managed arguments).
+		//Wrapper constructor (arguments are meant to interface managed language).
 		DecodeWrapper(
 			System::String^ sequence,
 			System::Boolean% stat)
@@ -109,17 +118,17 @@ namespace libecgclrinterface {
 			stat = status;
 		}
 
-		//Reference deletion.
+		//Memory deallocation.
 		~DecodeWrapper() {
 			delete this->object;
 		}
 
-		//Wrapper function.
+		//Wrapper function
 		System::Boolean _decode() {
 			return this->object->decode();
 		}
 
-		//Wrapper function.
+		//Wrapper function
 		System::Void _getReconstructed(System::Collections::Generic::List<int>^% lst) {
 			pList list = new std::list<int>();
 			this->object->getReconstructed(list);
@@ -128,7 +137,7 @@ namespace libecgclrinterface {
 			return;
 		}
 
-		//Wrapper function.
+		//Wrapper function
 		System::Single _getPercentRootMeanSquareDifference(System::Collections::Generic::List<int>^ original_samples) {
 			pList originalSet = new std::list<int>();
 			for (int i = 0; i < original_samples->Count; ++i)
