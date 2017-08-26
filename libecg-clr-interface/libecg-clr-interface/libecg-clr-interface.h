@@ -12,8 +12,8 @@
 #pragma once
 
 /* Include libecg headers. These classes are implemented in native C++ 14. */
-#include "../../../libecg/libecg/encode.h" //Encode class
-#include "../../../libecg/libecg/decode.h" //Decode class
+#include "../../../libecg/libecg/encoder.h" //Encoder class
+#include "../../../libecg/libecg/decoder.h" //Decoder class
 /**/
 
 /* Needed in order to convert managed-type of string back into native standard string. */
@@ -24,19 +24,19 @@ using namespace libecg; //libecg namespace
 
 namespace libecgclrinterface {
 
-	/* A wrapper class that contains managed code to interface unmanaged Encode class from libecg. */
-	/* Each instance of EncodeWrapper class shall handle only one instance of Encode class at a time. */
+	/* A wrapper class that contains managed code to interface unmanaged Encoder class from libecg. */
+	/* Each instance of EncoderWrapper class shall handle only one instance of Encoder class at a time. */
 	/* Re-instantiation of this class will get its state destroyed.*/
-	public ref class EncodeWrapper
+	public ref class EncoderWrapper
 	{
 		// TODO: Add your methods for this class here.
 	private:
 		typedef std::list<int>* pList;
-		Encode* object = nullptr; //Represents an instance to Encode class.
+		Encoder* object = nullptr; //Represents an instance to Encoder class.
 
 	public:
 		//Wrapper constructor (arguments are meant to interface managed language).
-		EncodeWrapper(
+		EncoderWrapper(
 			System::Int32 dataset_len,
 			System::String^ dataset_path,
 			System::Int32 bitsThreshold,
@@ -53,13 +53,13 @@ namespace libecgclrinterface {
 			if (this->object != nullptr)
 				delete this->object;
 			//Re-initialization
-			this->object = new Encode(dataset_length, dataset_file_path, threshold, apertureSize, status);
+			this->object = new Encoder(dataset_length, dataset_file_path, threshold, apertureSize, status);
 			//Update back re-initialization status.
 			stat = status;
 		};
 
 		//Memory deallocation.
-		~EncodeWrapper() {
+		~EncoderWrapper() {
 			delete this->object;
 		};
 
@@ -90,19 +90,19 @@ namespace libecgclrinterface {
 		}
 	};
 
-	/* A wrapper class that contains managed code to interface unmanaged Decode class from libecg. */
-	/* Each instance of DecodeWrapper class shall handle only one instance of Decode class at a time. */
+	/* A wrapper class that contains managed code to interface unmanaged Decoder class from libecg. */
+	/* Each instance of DecoderWrapper class shall handle only one instance of Decoder class at a time. */
 	/* Re-instantiation of this class will get its state destroyed.*/
-	public ref class DecodeWrapper
+	public ref class DecoderWrapper
 	{
 		// TODO: Add your methods for this class here.
 	private:
 		typedef std::list<int>* pList;
-		Decode* object = nullptr; //Represents an instance to Decode class.
+		Decoder* object = nullptr; //Represents an instance to Decoder class.
 
 	public:
 		//Wrapper constructor (arguments are meant to interface managed language).
-		DecodeWrapper(
+		DecoderWrapper(
 			System::String^ sequence,
 			System::Boolean% stat)
 		{
@@ -113,13 +113,13 @@ namespace libecgclrinterface {
 			if (this->object != nullptr)
 				delete this->object;
 			//Re-initialization.
-			this->object = new Decode(compressed_sequence, status);
+			this->object = new Decoder(compressed_sequence, status);
 			//Update back re-initialization status.
 			stat = status;
 		}
 
 		//Memory deallocation.
-		~DecodeWrapper() {
+		~DecoderWrapper() {
 			delete this->object;
 		}
 
