@@ -1,35 +1,42 @@
-/*
-* @author: Kamyar Nemati <kamyarnemati@gmail.com>
-* @description: This class provides wrapper functions for libecg library.
-*/
-
 // libecg-clr-interface.h
+
+/*
+* Author: Kamyar Nemati
+* Email: kamyarnemati at gmail.com
+*
+* Description:
+* This file contains managed-C++ code (Common Language Runtime classes).
+* It provides wrappers for libecg library to interface CLR-based languages such as C#.
+*/
 
 #pragma once
 
-/* Include libecg headers */
-#include "../../../libecg/libecg/encode.h"
-#include "../../../libecg/libecg/decode.h"
+/* Include libecg headers. These classes are implemented in native C++ 14. */
+#include "../../../libecg/libecg/encoder.h" //Encoder class
+#include "../../../libecg/libecg/decoder.h" //Decoder class
 /**/
 
+/* Needed in order to convert managed-type of string back into native standard string. */
 #include <msclr\marshal_cppstd.h>
 
 using namespace System;
-using namespace libecg; //Open up libecg namespace
+using namespace libecg; //libecg namespace
 
 namespace libecgclrinterface {
 
-	//A managed wrapper class for unmanaged Encode class. Each EncodeWrapper shall handle only one Encode object at a time.
-	public ref class EncodeWrapper
+	/* A wrapper class that contains managed code to interface unmanaged Encoder class from libecg. */
+	/* Each instance of EncoderWrapper class shall handle only one instance of Encoder class at a time. */
+	/* Re-instantiation of this class will get its state destroyed.*/
+	public ref class EncoderWrapper
 	{
 		// TODO: Add your methods for this class here.
 	private:
 		typedef std::list<int>* pList;
-		Encode* object = nullptr; //Represents a reference to to Encode class.
+		Encoder* object = nullptr; //Represents an instance to Encoder class.
 
 	public:
-		//Wrapper constructor (managed arguments).
-		EncodeWrapper(
+		//Wrapper constructor (arguments are meant to interface managed language).
+		EncoderWrapper(
 			System::Int32 dataset_len,
 			System::String^ dataset_path,
 			System::Int32 bitsThreshold,
@@ -46,17 +53,17 @@ namespace libecgclrinterface {
 			if (this->object != nullptr)
 				delete this->object;
 			//Re-initialization
-			this->object = new Encode(dataset_length, dataset_file_path, threshold, apertureSize, status);
+			this->object = new Encoder(dataset_length, dataset_file_path, threshold, apertureSize, status);
 			//Update back re-initialization status.
 			stat = status;
 		};
 
-		//Reference deletion.
-		~EncodeWrapper() {
+		//Memory deallocation.
+		~EncoderWrapper() {
 			delete this->object;
 		};
 
-		//Wrapper function.
+		//Wrapper function
 		System::Void _getOriginal(System::Collections::Generic::List<int>^% lst) {
 			pList list = new std::list<int>();
 			this->object->getOriginal(list);
@@ -65,35 +72,37 @@ namespace libecgclrinterface {
 			return;
 		}
 
-		//Wrapper function.
+		//Wrapper function
 		System::Boolean _encode() {
 			return this->object->encode();
 		}
 
-		//Wrapper function.
+		//Wrapper function
 		System::String^ _getBinarySequeneCompressed() {
 			std::string str = this->object->getBinarySequeneCompressed();
 			return gcnew String(str.c_str());
 		}
 
-		//Wrapper function.
+		//Wrapper function
 		System::Single _getBinarySequeneCompressionRatio() {
 			float cr = this->object->getBinarySequeneCompressionRatio();
 			return cr;
 		}
 	};
 
-	//A managed wrapper class for unmanaged Decode class. Each DecodeWrapper shall handle only one Decode object at a time.
-	public ref class DecodeWrapper
+	/* A wrapper class that contains managed code to interface unmanaged Decoder class from libecg. */
+	/* Each instance of DecoderWrapper class shall handle only one instance of Decoder class at a time. */
+	/* Re-instantiation of this class will get its state destroyed.*/
+	public ref class DecoderWrapper
 	{
 		// TODO: Add your methods for this class here.
 	private:
 		typedef std::list<int>* pList;
-		Decode* object = nullptr; //Represents a reference to to Decode class.
+		Decoder* object = nullptr; //Represents an instance to Decoder class.
 
 	public:
-		//Wrapper constructor (managed arguments).
-		DecodeWrapper(
+		//Wrapper constructor (arguments are meant to interface managed language).
+		DecoderWrapper(
 			System::String^ sequence,
 			System::Boolean% stat)
 		{
@@ -104,22 +113,22 @@ namespace libecgclrinterface {
 			if (this->object != nullptr)
 				delete this->object;
 			//Re-initialization.
-			this->object = new Decode(compressed_sequence, status);
+			this->object = new Decoder(compressed_sequence, status);
 			//Update back re-initialization status.
 			stat = status;
 		}
 
-		//Reference deletion.
-		~DecodeWrapper() {
+		//Memory deallocation.
+		~DecoderWrapper() {
 			delete this->object;
 		}
 
-		//Wrapper function.
+		//Wrapper function
 		System::Boolean _decode() {
 			return this->object->decode();
 		}
 
-		//Wrapper function.
+		//Wrapper function
 		System::Void _getReconstructed(System::Collections::Generic::List<int>^% lst) {
 			pList list = new std::list<int>();
 			this->object->getReconstructed(list);
@@ -128,7 +137,7 @@ namespace libecgclrinterface {
 			return;
 		}
 
-		//Wrapper function.
+		//Wrapper function
 		System::Single _getPercentRootMeanSquareDifference(System::Collections::Generic::List<int>^ original_samples) {
 			pList originalSet = new std::list<int>();
 			for (int i = 0; i < original_samples->Count; ++i)

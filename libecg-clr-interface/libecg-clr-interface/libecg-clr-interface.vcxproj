@@ -134,8 +134,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\libecg\libecg\base.h" />
-    <ClInclude Include="..\..\..\libecg\libecg\decode.h" />
-    <ClInclude Include="..\..\..\libecg\libecg\encode.h" />
+    <ClInclude Include="..\..\..\libecg\libecg\decoder.h" />
+    <ClInclude Include="..\..\..\libecg\libecg\encoder.h" />
     <ClInclude Include="..\..\..\libecg\libecg\lib.h" />
     <ClInclude Include="..\..\..\libecg\libecg\utils.h" />
     <ClInclude Include="libecg-clr-interface.h" />
@@ -145,15 +145,17 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\libecg\libecg\base.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\..\libecg\libecg\decode.cpp">
+    <ClCompile Include="..\..\..\libecg\libecg\decoder.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\..\libecg\libecg\encode.cpp">
+    <ClCompile Include="..\..\..\libecg\libecg\encoder.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\..\libecg\libecg\utils.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="libecg-clr-interface.cpp" />
