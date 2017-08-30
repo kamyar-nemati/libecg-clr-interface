@@ -4,9 +4,9 @@
 Microsoft.NET Common Language Runtime (CLR) interface for libecg.
 
 ## Dependency
-This repository depends on: __libecg__
+This repository depends on: __libecg__ (v >= 1.1.0.3)
 
-_All headers and source files of libecg repo are expected to be included in the solution. Precompiled headers for all source files must be disabled to have a successful compilation._
+_All headers and source files of libecg repo are expected to be included in the solution. Precompiled headers for all included source files must be disabled to have a successful compilation._
 
 ## Design
 Context-level Architectural Design
