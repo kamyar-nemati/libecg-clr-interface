@@ -1,12 +1,12 @@
 # Repository name: libecg-clr-interface
 
 ## Repo Description
-Microsoft.NET Common Language Runtime (CLR) interface for libecg.
+Microsoft.NET Common Language Runtime (CLR) interface for libecg: A wrapper class for managed code.
 
 ## Dependency
 This repository depends on: __libecg__ (v >= 1.1.0.3)
 
-_All headers and source files of libecg repo are expected to be included in the solution. Precompiled headers for all included source files must be disabled to have a successful compilation._
+_All headers and source files of libecg repo are expected to be included in the solution. Precompiled headers must be disabled for all the included source files to have a successful compilation._
 
 ## Design
 Context-level Architectural Design
