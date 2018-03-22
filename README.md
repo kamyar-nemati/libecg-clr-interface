@@ -4,7 +4,10 @@
 Microsoft.NET Common Language Runtime (CLR) interface for libecg: A wrapper class for managed code.
 
 ## Dependency
-This repository depends on: __libecg__ (v >= 1.1.0.3) [Here](https://github.com/kamyar-nemati/libecg/tree/branch-v1.1.0.3)
+This repository depends on [libecg](https://github.com/kamyar-nemati/libecg)
+* To get _libecg_ sub-project, run the following commands:
+    * `git submodule init`
+    * `git submodule update`
 
 _All headers and source files of libecg repo are expected to be included in the solution. Precompiled headers must be disabled for all the included source files to have a successful compilation._
 
