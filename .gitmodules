@@ -1,3 +1,0 @@
-[submodule "libecg"]
-	path = libecg
-	url = https://github.com/kamyar-nemati/libecg.git
