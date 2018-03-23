@@ -24,19 +24,19 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\libecg\libecg\base.h">
+    <ClInclude Include="..\..\libecg\libecg\base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\libecg\libecg\lib.h">
+    <ClInclude Include="..\..\libecg\libecg\decoder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\libecg\libecg\utils.h">
+    <ClInclude Include="..\..\libecg\libecg\lib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\libecg\libecg\decoder.h">
+    <ClInclude Include="..\..\libecg\libecg\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\libecg\libecg\encoder.h">
+    <ClInclude Include="..\..\libecg\libecg\encoder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,16 +50,16 @@
     <ClCompile Include="Stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\libecg\libecg\base.cpp">
+    <ClCompile Include="..\..\libecg\libecg\base.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\libecg\libecg\utils.cpp">
+    <ClCompile Include="..\..\libecg\libecg\decoder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\libecg\libecg\decoder.cpp">
+    <ClCompile Include="..\..\libecg\libecg\encoder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\libecg\libecg\encoder.cpp">
+    <ClCompile Include="..\..\libecg\libecg\utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

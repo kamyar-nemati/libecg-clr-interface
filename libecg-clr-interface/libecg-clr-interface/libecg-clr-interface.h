@@ -12,8 +12,8 @@
 #pragma once
 
 /* Include libecg headers. These classes are implemented in native C++ 14. */
-#include "../../../libecg/libecg/encoder.h" //Encoder class
-#include "../../../libecg/libecg/decoder.h" //Decoder class
+#include "../../libecg/libecg/encoder.h" //Encoder class
+#include "../../libecg/libecg/decoder.h" //Decoder class
 /**/
 
 /* Needed in order to convert managed-type of string back into native standard string. */
